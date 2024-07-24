@@ -28,6 +28,7 @@ export const Button = ({
         padding="space-16"
         marginVertical="space-8"
         backgroundColor={backgroundColor}
+        opacity={disabled ? 0.6 : 1 as any}
         borderRadius='space-12'
         alignItems="center"
         alignSelf={alignSelf}

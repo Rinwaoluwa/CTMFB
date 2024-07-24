@@ -49,14 +49,14 @@ export const TextInput = ({
             onBlur={() => (pureOnBlur ? pureOnBlur(onBlur) : onBlur())}
             left={props.left}
             right={props.right}
-            outlineColor="#666666"
+            outlineColor={!error ? "#666666" : "red"}
             textColor="grey"
             error={!!error}
             onFocus={() => onFocus?.()}
             autoCapitalize="none"
             activeOutlineColor='green'
             editable={props?.editable}
-            style={[error ? {color: "#CC0000"} : props.containerStyle]}
+            style={props.containerStyle}
             onPressIn={() => props.onPress?.()}
             {...props}
           />
