@@ -33,10 +33,10 @@ export function useButtonVariants(variant: ButtonVariant) {
     },
     disabled: {
       outer: {
-        backgroundColor: colors.grey3,
+        backgroundColor: colors.grey,
       } as ViewStyle,
       inner: {
-        color: colors.grey1,
+        color: colors.overlay,
       } as TextStyle,
     },
   };

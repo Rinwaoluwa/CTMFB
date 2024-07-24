@@ -9,6 +9,7 @@ import paper_plane from "./icons/paper-plane.svg";
 import phone from "./icons/phone.svg";
 import remita from "./icons/remita.svg";
 import tv from "./icons/tv.svg";
+import biometrics from "./icons/finger-print.svg";
 
 export const ICONS = {
     bulb,
@@ -19,6 +20,7 @@ export const ICONS = {
     phone,
     remita,
     tv,
+    biometrics,
 };
 
 export type IconName = keyof typeof ICONS;

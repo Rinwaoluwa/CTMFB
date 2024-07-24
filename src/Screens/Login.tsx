@@ -1,3 +1,6 @@
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import Box from "../design-system/components/Box";
 import { FLEX } from "../utils/constants";
 import { Button } from "../design-system/components/button/button";
@@ -6,25 +9,30 @@ import {
   getComputedWidth,
 } from "../design-system/layout/responsive";
 import Text from "../design-system/components/Text";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { login, LoginFormValues } from "../utils/schema";
+import { TextInput } from "../design-system/components/TextInput";
+import { TextInput as RNPaperTextInput } from "react-native-paper";
+import Icon from "../assets/svgs/icon";
 
 function Login() {
-    const [hidePassword, setHidePassword] = useState(true);
-    // const {control, handleSubmit, formState: {errors}, setError, getValues} = useForm<SignInFormValues>({
-    //     defaultValues: {
-    //       email: '',
-    //       password: '',
-    //     },
-    //     mode: 'onSubmit',
-    //     resolver: zodResolver(sigin),
-    //   });
+  const [hidePassword, setHidePassword] = useState(true);
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+    setError,
+    getValues,
+  } = useForm<LoginFormValues>({
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+    mode: "onSubmit",
+    resolver: zodResolver(login),
+  });
 
   return (
-    <Box
-      style={[FLEX, { backgroundColor: "white" }]}
-      marginHorizontal="space-24"
-    >
+    <Box style={FLEX} marginHorizontal="space-24">
       <Button
         title="Cancel"
         backgroundColor="white"
@@ -42,11 +50,54 @@ function Login() {
       <Text
         color="grey"
         variant="subtext-regular"
-        marginTop="space-32"
-        style={{width: getComputedWidth(250)}}
-    >
+        marginVertical="space-32"
+        style={{ width: getComputedWidth(250) }}
+      >
         We are glad to have you, kindly enter your login details.
       </Text>
+
+      <TextInput
+        value="+234 809 531 6411"
+        control={control}
+        label="Phone Number*"
+        placeholder="+234 809 531 6411"
+        error={errors.email?.message}
+        name="phone"
+        textContentType="telephoneNumber"
+        keyboardType="phone-pad"
+      />
+
+      <Box marginVertical="space-12" />
+
+      <TextInput
+        value="aaabbbccc"
+        control={control}
+        label="Your Password"
+        placeholder="Password"
+        error={errors.password?.message}
+        name="password"
+        textContentType="password"
+        secureTextEntry={hidePassword}
+        right={
+          <RNPaperTextInput.Icon
+            onPress={() => setHidePassword(!hidePassword)}
+            icon={hidePassword ? "eye-off-outline" : "eye-outline"}
+          />
+        }
+      />
+
+      <Box marginVertical="space-20" />
+
+      <Button title="Login" backgroundColor="green" />
+
+      <Box marginVertical="space-20" alignItems="center" gap="space-16">
+        <Text color="green">Don’t have an account? Sign up</Text>
+        <Text color="grey">Forgot Password?</Text>
+        <Icon name="biometrics" size={50} />
+      </Box>
+      <Box marginVertical="space-64" alignItems="center">
+        <Text color="grey">v1.1.1</Text>
+      </Box>
     </Box>
   );
 }

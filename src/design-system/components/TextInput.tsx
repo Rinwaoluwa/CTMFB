@@ -43,17 +43,18 @@ export const TextInput = ({
         control={props.control}
         render={({field: {onChange, onBlur, value}}) => (
           <RNPaperTextInput
-            mode="flat"
+            mode="outlined"
             value={value}
             onChangeText={onChange}
             onBlur={() => (pureOnBlur ? pureOnBlur(onBlur) : onBlur())}
             left={props.left}
             right={props.right}
-            outlineColor="black"
+            outlineColor="#666666"
             textColor="grey"
             error={!!error}
             onFocus={() => onFocus?.()}
             autoCapitalize="none"
+            activeOutlineColor='green'
             editable={props?.editable}
             style={[error ? {color: "#CC0000"} : props.containerStyle]}
             onPressIn={() => props.onPress?.()}
