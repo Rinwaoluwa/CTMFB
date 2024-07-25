@@ -7,7 +7,9 @@ import theme from "./src/design-system/theme/theme";
 import {Providers} from "./src/utils/redux/providers";
 import {PersistGate} from "redux-persist/integration/react";
 import {persistor} from "./src/utils/redux/store";
-import Login from "./src/Screens/Login";
+import Login from "./src/screens/Login";
+import SignInError from "./src/screens/SignInError";
+import Dashboard from "./src/screens/Dashboard";
 // import Router from "./src/routes/Router";
 
 export default function App() {
@@ -19,7 +21,9 @@ export default function App() {
           <ThemeProvider theme={theme}>
             <PaperProvider>
               {/* <Router /> */}
-              <Login />
+              {/* <Login /> */}
+              {/* <SignInError /> */}
+              <Dashboard />
             </PaperProvider>
           </ThemeProvider>
         </PersistGate>

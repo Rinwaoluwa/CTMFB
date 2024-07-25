@@ -10,6 +10,15 @@ import phone from "./icons/phone.svg";
 import remita from "./icons/remita.svg";
 import tv from "./icons/tv.svg";
 import biometrics from "./icons/finger-print.svg";
+import clipboard from "./icons/clipboard.svg";
+import star from "./icons/star.svg";
+import bell from "./icons/bell.svg";
+import moon from "./icons/moon.fill.svg";
+import triangles from "./icons/Union.svg";
+import home from "./icons/u_home-alt.svg";
+import history from "./icons/history.svg";
+import card from "./icons/credit-card.svg";
+import boxes from "./icons/box-grouped.svg";
 
 export const ICONS = {
     bulb,
@@ -21,6 +30,15 @@ export const ICONS = {
     remita,
     tv,
     biometrics,
+    clipboard,
+    star,
+    bell,
+    moon,
+    triangles,
+    home,
+    history,
+    card,
+    boxes,
 };
 
 export type IconName = keyof typeof ICONS;

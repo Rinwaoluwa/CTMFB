@@ -2,17 +2,15 @@ import {createSlice} from "@reduxjs/toolkit";
 import type {PayloadAction} from "@reduxjs/toolkit";
 
 export interface IState {
-    firstName: string;
-    lastName: string;
-    email: string;
+    phoneNumber: string;
     password: string;
+    hideBalance: boolean;
 }
 
 const initialState: IState = {
-    firstName: "",
-    lastName: "",
-    email: "",
+    phoneNumber: "",
     password: "",
+    hideBalance: false,
 }
 
 export const profileSlice = createSlice({
@@ -20,13 +18,14 @@ export const profileSlice = createSlice({
     initialState,
     reducers: {
         setProfile: (state, action: PayloadAction<IState>) => {
-            state.firstName = action.payload.firstName;
-            state.lastName = action.payload.lastName;
-            state.email = action.payload.email;
+            state.phoneNumber = action.payload.phoneNumber;
             state.password = action.payload.password;
         },
+        setHideBalance: (state, action: PayloadAction<boolean>) => {
+            state.hideBalance = action.payload;
+        }
     }
 });
 
-export const {setProfile} = profileSlice.actions;
+export const {setProfile, setHideBalance} = profileSlice.actions;
 export default profileSlice.reducer;
