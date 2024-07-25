@@ -37,3 +37,24 @@ export const transactions = [
     debit: true,
   },
 ];
+
+export const cards = [
+  {
+    accountType: "Savings Account Balance",
+    balance: "NGN102,238.71",
+    accountName: "Adewole Damilare",
+    accountNumber: "2040011238",
+  },
+  {
+    accountType: "Investment Account Balance",
+    balance: "NGN500,567.71",
+    accountName: "Adewole Damilare",
+    accountNumber: "2040011238",
+  },
+  {
+    accountType: "USD Account Balance",
+    balance: "USD 302,238.00",
+    accountName: "Adewole Damilare",
+    accountNumber: "4582565936",
+  },
+]

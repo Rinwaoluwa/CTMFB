@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react';
 import {StyleProp, ViewStyle} from 'react-native';
 import {ButtonVariant} from './button.variants';
-import {BorderRadii, Color} from '../../theme/theme';
+import {BorderRadii, Color, Spacing} from '../../theme/theme';
 
 export interface ButtonProps {
   title: string | React.ReactNode;
@@ -18,4 +18,7 @@ export interface ButtonProps {
   left?: ReactNode;
   right?: ReactNode;
   borderRadius?: BorderRadii;
+  padding?: Spacing;
+  paddingHorizontal?: Spacing;
+  paddingVertical?: Spacing;
 }

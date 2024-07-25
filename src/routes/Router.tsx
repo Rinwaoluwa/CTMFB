@@ -1,8 +1,11 @@
+import { useEffect } from 'react';
+import {NavigationContainer} from '@react-navigation/native';
 import {useFonts} from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import { useAppSelector } from '../utils/redux/hooks';
 import { RootState } from '../utils/redux/store';
-import { useEffect } from 'react';
+import AppStack from './AppStack';
+import AuthStack from './AuthStack';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -26,9 +29,9 @@ const Router = () => {
     }
   
     return (
-    //   <NavigationContainer>
-    //     {isAuthenticated ? <AppStack /> : <AuthStack />}
-    //   </NavigationContainer>
+      <NavigationContainer>
+        {isAuthenticated ? <AppStack /> : <AuthStack />}
+      </NavigationContainer>
     );
   };
   

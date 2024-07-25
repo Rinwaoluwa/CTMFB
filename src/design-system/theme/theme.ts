@@ -26,6 +26,7 @@ const theme = createTheme({
       borderRadii: {
         none: 0,
         'space-4': 4,
+        'space-5': 5,
         'space-8': 8,
         'space-12': 12,
         'space-16': 16,
@@ -78,5 +79,6 @@ export type Theme = typeof theme;
 export type ThemeKey = keyof typeof theme;
 export type Color = keyof Theme['colors'];
 export type BorderRadii = keyof Theme['borderRadii'];
+export type Spacing = keyof Theme['spacing'];
 
 export default theme;

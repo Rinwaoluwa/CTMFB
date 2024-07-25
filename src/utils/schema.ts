@@ -2,7 +2,7 @@ import {z} from 'zod';
 
 
 export const login = z.object({
-    email: z.string().email(),
+    phoneNumber: z.string(),
     password: z.string().min(6),
   });
 

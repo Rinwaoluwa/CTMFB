@@ -19,6 +19,7 @@ import home from "./icons/u_home-alt.svg";
 import history from "./icons/history.svg";
 import card from "./icons/credit-card.svg";
 import boxes from "./icons/box-grouped.svg";
+import send from "./icons/send.svg";
 
 export const ICONS = {
     bulb,
@@ -39,6 +40,7 @@ export const ICONS = {
     history,
     card,
     boxes,
+    send,
 };
 
 export type IconName = keyof typeof ICONS;

@@ -1,22 +1,60 @@
-import { ScrollView, View } from "react-native";
+import { useState } from "react";
+import { NativeScrollEvent, NativeSyntheticEvent, ScrollView, StyleSheet } from "react-native";
 import Box from "../design-system/components/Box";
 import Card from "../design-system/components/Card";
 import Header from "../design-system/components/Header";
-import { FLEX, services, transactions } from "../utils/constants";
+import { cards, FLEX, services, transactions } from "../utils/constants";
 import Text from "../design-system/components/Text";
 import { Button } from "../design-system/components/button/button";
-import { getComputedWidth } from "../design-system/layout/responsive";
+import {
+  getComputedHeight,
+  getComputedWidth,
+} from "../design-system/layout/responsive";
 import ServiceItem from "../design-system/components/ServiceItem";
 import { IconName } from "../assets/svgs/types";
 import TransactionItem from "../design-system/components/TransactionItem";
+import DotIndicator from "../design-system/components/DotIndicator";
 
 function Dashboard() {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const handleScroll = (event:NativeSyntheticEvent<NativeScrollEvent>) => {
+    const scrollPosition = event.nativeEvent.contentOffset.x;
+    const cardWidth = getComputedWidth(300) + 12; // card width + margin.
+    const index = Math.round(scrollPosition / cardWidth);
+    setActiveIndex(index);
+  }
   return (
-    <ScrollView>
-      <Box style={FLEX} marginHorizontal="space-24" marginTop="space-64">
-        <Header />
-        <Card />
+    <ScrollView style={[FLEX, styles.root]}>
+      <Header />
 
+      <ScrollView
+        style={styles.cardsContainer}
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        onScroll={handleScroll}
+      >
+        {cards.map((card, index) => (
+          <Card
+            key={index}
+            accountName={card?.accountName}
+            accountNumber={card?.accountNumber}
+            accountType={card?.accountType}
+            balance={card?.balance}
+            opacity={activeIndex === index ? 1 : 0.6}
+          />
+        ))}
+      </ScrollView>
+      <Box
+        flexDirection="row"
+        justifyContent="center"
+        marginTop="space-16"
+        gap="space-8"
+      >
+        {cards.map((_, index) => (
+          <DotIndicator bgColor={activeIndex === index ? "green" : 'grey'} />
+        ))}
+      </Box>
+      <Box style={FLEX} marginHorizontal="space-24">
         {/* Service Section. */}
         <>
           <Box
@@ -25,15 +63,22 @@ function Dashboard() {
             justifyContent="space-between"
             marginVertical="space-16"
           >
-            <Text variant="heading-3">Services</Text>
+            <Text color="black" variant="heading-3">
+              Services
+            </Text>
             <Button
               title="View all"
               backgroundColor="lightGrey"
               color="green"
               style={{
-                width: getComputedWidth(100),
-                height: 50,
+                width: getComputedWidth(80),
+                height: 40,
+                alignItems: "center",
+                justifyContent: "center",
               }}
+              padding="none"
+              paddingHorizontal="none"
+              paddingVertical="none"
             />
           </Box>
           <Box
@@ -60,15 +105,22 @@ function Dashboard() {
             justifyContent="space-between"
             marginVertical="space-16"
           >
-            <Text variant="heading-3">Recent Transactions</Text>
+            <Text color="black" variant="heading-3">
+              Recent Transactions
+            </Text>
             <Button
               title="View all"
               backgroundColor="lightGrey"
               color="green"
               style={{
-                width: getComputedWidth(100),
-                height: 50,
+                width: getComputedWidth(80),
+                height: 40,
+                alignItems: "center",
+                justifyContent: "center",
               }}
+              padding="none"
+              paddingHorizontal="none"
+              paddingVertical="none"
             />
           </Box>
           {transactions.map((transaction) => (
@@ -81,11 +133,21 @@ function Dashboard() {
               key={transaction?.amount}
             />
           ))}
-          {/* <TransactionItem /> */}
         </>
       </Box>
     </ScrollView>
   );
 }
+
+const styles = StyleSheet.create({
+  root: {
+    marginTop: getComputedHeight(30),
+  },
+
+  cardsContainer: {
+    marginLeft: getComputedWidth(20),
+    marginTop: getComputedHeight(16),
+  },
+});
 
 export default Dashboard;

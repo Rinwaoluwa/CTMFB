@@ -19,21 +19,24 @@ export const Button = ({
   left,
   right,
   borderRadius,
+  padding="space-16",
+  paddingHorizontal='space-24',
+  paddingVertical='space-16',
   ...props
 }: ButtonProps) => {
   const {colors} = useAppTheme();
   return (
     <TouchableOpacity onPress={onPress} disabled={disabled || loading}>
       <Box
-        padding="space-16"
+        padding={padding}
         marginVertical="space-8"
         backgroundColor={backgroundColor}
         opacity={disabled ? 0.6 : 1 as any}
         borderRadius='space-12'
         alignItems="center"
         alignSelf={alignSelf}
-        paddingHorizontal={alignSelf ? 'space-24' : 'none'}
-        paddingVertical={alignSelf ? 'space-8' : 'space-16'}
+        paddingHorizontal={alignSelf ? paddingHorizontal : 'none'}
+        paddingVertical={alignSelf ? 'space-8' : paddingVertical}
         style={[
           style,
           !!backgroundColor ? {backgroundColor: colors?.[backgroundColor]} : {},

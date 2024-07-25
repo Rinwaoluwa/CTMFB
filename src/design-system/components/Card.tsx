@@ -4,7 +4,7 @@ import Icon from "../../assets/svgs/icon";
 import Box from "./Box";
 import Text from "./Text";
 import { Switch } from "react-native-paper";
-import { getComputedHeight } from "../layout/responsive";
+import { getComputedHeight, getComputedWidth } from "../layout/responsive";
 import { useAppDispatch, useAppSelector } from "../../utils/redux/hooks";
 import { RootState } from "../../utils/redux/store";
 import { setHideBalance } from "../../utils/redux/slices/profile";
@@ -16,6 +16,7 @@ interface IProps {
   balance: string;
   accountName: string;
   accountNumber: string;
+  opacity: number;
 }
 
 function Card({
@@ -23,6 +24,7 @@ function Card({
   accountNumber = "2040011238",
   accountType = "Savings Account Balance",
   balance = "NGN102,238.71",
+  opacity,
 }: IProps) {
   const dispatch = useAppDispatch();
   const { hideBalance } = useAppSelector((state: RootState) => state.profile);
@@ -51,11 +53,15 @@ function Card({
   return (
     <Box
       backgroundColor="green"
-      padding="space-20"
+      paddingHorizontal="space-20"
+      paddingVertical="space-12"
+      marginLeft="space-12"
       zIndex={-20}
       overflow="hidden"
       height={getComputedHeight(200)}
-      borderRadius="space-16"
+      width={getComputedWidth(300)}
+      borderRadius="space-8"
+      opacity={opacity}
     >
       {/* Account Details */}
       <Box gap="space-12">
@@ -75,9 +81,11 @@ function Card({
           style={{ flexDirection: "row", alignItems: "center", gap: 8 }}
           onPress={copyToClipboard}
         >
-          {!textCopied && <Text color="white" variant="caption-medium">
-            {accountNumber}
-          </Text>}
+          {!textCopied && (
+            <Text color="white" variant="caption-medium">
+              {accountNumber}
+            </Text>
+          )}
           <Icon name="clipboard" size={15} />
           {textCopied && (
             <Text
@@ -95,6 +103,7 @@ function Card({
       <Box
         flexDirection="row"
         alignItems="center"
+        gap="space-4"
         position="absolute"
         bottom={8}
         right={4}
@@ -102,7 +111,11 @@ function Card({
         <Text color="white" variant="subtext-regular">
           Hide balance
         </Text>
-        <Switch value={isSwitchOn} onValueChange={onToggleSwitch} />
+        <Switch
+          value={isSwitchOn}
+          onValueChange={onToggleSwitch}
+          color="#EBEBEB"
+        />
       </Box>
       {/* Backgroun Triangles */}
       <Box position="absolute" right={-70} zIndex={-10}>

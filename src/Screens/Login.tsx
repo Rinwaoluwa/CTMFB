@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { ScrollView } from "react-native";
+import { SubmitErrorHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Box from "../design-system/components/Box";
 import { FLEX } from "../utils/constants";
@@ -13,31 +14,64 @@ import { login, LoginFormValues } from "../utils/schema";
 import { TextInput } from "../design-system/components/TextInput";
 import { TextInput as RNPaperTextInput } from "react-native-paper";
 import Icon from "../assets/svgs/icon";
-import { ScrollView } from "react-native";
+import { useAppDispatch, useAppSelector } from "../utils/redux/hooks";
+import { RootState } from "../utils/redux/store";
+import { setIsAuthenticated } from "../utils/redux/slices/auth-tracker";
 
-function Login() {
+function Login({ navigation }: any) {
+  const dispatch = useAppDispatch();
+  const { phoneNumber, password } = useAppSelector(
+    (state: RootState) => state.profile
+  );
   const [hidePassword, setHidePassword] = useState(true);
   const {
     control,
     handleSubmit,
     formState: { errors },
     setError,
-    getValues,
+    reset,
   } = useForm<LoginFormValues>({
     defaultValues: {
-      email: "",
-      password: "",
+      phoneNumber: '0123456789',
+      password: 'aaabbbccc',
     },
     mode: "onSubmit",
     resolver: zodResolver(login),
   });
+
+  const onSubmit: SubmitErrorHandler<LoginFormValues> = (data) => {
+    try {
+      // Simulates user entering incorrect password with known phone number,
+      // redirecting to SignInError Screen.
+      if (data.phoneNumber === phoneNumber && data.password !== password) {
+        navigation.navigate("Error");
+        return;
+      }
+
+      if (data.phoneNumber !== phoneNumber) {
+        setError("phoneNumber", {
+          type: "custom",
+          message: "Invalid phone number",
+        });
+        return;
+      }
+
+      dispatch(setIsAuthenticated(true));
+      reset();
+    } catch (error: { name: string; message: string }) {
+      setError(error?.name, {
+        type: "custom",
+        message: error?.message,
+      });
+    }
+  };
 
   return (
     <ScrollView>
       <Box style={FLEX} marginHorizontal="space-24">
         <Button
           title="Cancel"
-          backgroundColor="white"
+          backgroundColor="transparent"
           color="green"
           style={{
             borderWidth: 1.5,
@@ -59,12 +93,12 @@ function Login() {
         </Text>
 
         <TextInput
-          value="+234 809 531 6411"
+          // value="+2348095316411"
           control={control}
           label="Phone Number*"
-          placeholder="+234 809 531 6411"
-          error={errors.email?.message}
-          name="phone"
+          placeholder="0123456789"
+          error={errors.phoneNumber?.message}
+          name="phoneNumber"
           textContentType="telephoneNumber"
           keyboardType="phone-pad"
         />
@@ -72,10 +106,9 @@ function Login() {
         <Box marginVertical="space-12" />
 
         <TextInput
-          value="aaabbbccc"
           control={control}
           label="Your Password"
-          placeholder="Password"
+          placeholder="aaabbbccc"
           error={errors.password?.message}
           name="password"
           textContentType="password"
@@ -90,7 +123,11 @@ function Login() {
 
         <Box marginVertical="space-20" />
 
-        <Button title="Login" backgroundColor="green" />
+        <Button
+          title="Login"
+          backgroundColor="green"
+          onPress={handleSubmit(onSubmit)}
+        />
 
         <Box marginVertical="space-20" alignItems="center" gap="space-16">
           <Text color="green">Don’t have an account? Sign up</Text>
